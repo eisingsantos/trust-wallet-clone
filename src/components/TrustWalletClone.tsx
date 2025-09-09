@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { Settings, MoreHorizontal, Search, RefreshCw, ChevronDown } from 'lucide-react';
+import { Settings, MoreHorizontal, Search, ScanLine, RefreshCw, ChevronDown } from 'lucide-react';
 
 interface CryptoData {
   id: number;
@@ -84,37 +84,43 @@ const TrustWalletClone = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-white">
         <div className="flex items-center space-x-4">
-          <Settings size={20} className="text-gray-700" />
-          <RefreshCw
+          <Settings size={20} 
+          className="text-gray-700"
+                      strokeWidth={3}
+
+          />
+          <ScanLine
             size={18}
-            className={`text-blue-500 cursor-pointer ${isRefreshing ? 'animate-spin' : ''}`}
-            onClick={handleRefresh}
+            strokeWidth={4}
+            className={`text-black hover:text-500 cursor-pointer `}
           />
         </div>
 
         <div className="flex items-center space-x-2">
           <span className="text-base font-medium text-gray-900">Carteira Ethe...</span>
+
+          <ChevronDown size={16} className="text-gray-500" />
+        </div>
+
+        <div className="flex items-center space-x-4">
           <div className="w-4 h-4">
             <svg viewBox="0 0 24 24" className="w-full h-full text-blue-500">
               <path fill="currentColor" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
             </svg>
           </div>
-          <ChevronDown size={16} className="text-gray-500" />
-        </div>
-
-        <div className="flex items-center space-x-4">
           <Search size={20} className="text-gray-700" />
         </div>
       </div>
 
       {/* Balance Section */}
       <div className="px-4 py-6 text-center bg-white">
-        <div className="text-3xl font-bold text-black mb-2">
-          {formatCurrency(balance)}
+        <div className="text-4xl font-bold text-gray-900 mb-3">
+          $ 73.261.037,58
         </div>
-        <div className="flex items-center justify-center space-x-1 text-red-500 mb-4">
+        <div className="flex items-center justify-center text-red-500 text-base mb-6">
           <span className="text-sm">↓</span>
-          <span className="text-sm">$ 1.385.267,65 (-1,89%)</span>
+
+          $ 1.385.267,65 (-1.89%)
         </div>
 
       </div>
@@ -124,7 +130,7 @@ const TrustWalletClone = () => {
         <div className="flex items-center justify-between border-b border-gray-200 pb-0">
           <div className="flex space-x-8">
             <button className="pb-3 border-b-2 border-blue-500 text-blue-500 font-medium text-sm">
-              Criptomoedas
+              Criptomoeda
             </button>
             <button className="pb-3 text-gray-500 text-sm">
               NFTs
@@ -143,11 +149,10 @@ const TrustWalletClone = () => {
         {cryptoData.map((crypto) => (
           <div key={crypto.id} className="flex items-center py-2">
             {/* Ethereum Logo */}
-            <div className="w-10 h-10 mr-3 flex items-center justify-center">
-              <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-                <div className="w-4 h-4 bg-white" style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}>
-                </div>
-              </div>
+            <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200">
+              <svg className="w-6 h-6 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z" />
+              </svg>
             </div>
 
             {/* Token Info */}
