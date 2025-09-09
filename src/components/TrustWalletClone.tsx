@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import { Settings, MoreHorizontal, Search, ScanLine, RefreshCw, ChevronDown } from 'lucide-react';
+import { Settings, MoreHorizontal, Search, ScanLine, FileClock, Settings2, RefreshCw, ChevronDown } from 'lucide-react';
 
 interface CryptoData {
   id: number;
@@ -84,9 +84,9 @@ const TrustWalletClone = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-white">
         <div className="flex items-center space-x-4">
-          <Settings size={20} 
-          className="text-gray-700"
-                      strokeWidth={3}
+          <Settings size={20}
+            className="text-gray-700"
+            strokeWidth={3}
 
           />
           <ScanLine
@@ -129,7 +129,7 @@ const TrustWalletClone = () => {
       <div className="bg-white px-4">
         <div className="flex items-center justify-between border-b border-gray-200 pb-0">
           <div className="flex space-x-8">
-            <button className="pb-3 border-b-2 border-blue-500 text-blue-500 font-medium text-sm">
+            <button className="pb-3 border-b-4 border-blue-500 text-gray-500 font-medium text-sm">
               Criptomoeda
             </button>
             <button className="pb-3 text-gray-500 text-sm">
@@ -138,8 +138,16 @@ const TrustWalletClone = () => {
           </div>
 
           <div className="flex items-center space-x-3 pb-3">
-            <div className="w-4 h-4 bg-gray-400 rounded"></div>
-            <RefreshCw size={14} className="text-gray-400" />
+            <FileClock
+              size={18}
+              className="text-gray-700"
+              strokeWidth={3}
+            />
+            <Settings2
+              size={18}
+              className="text-gray-700"
+              strokeWidth={3}
+            />
           </div>
         </div>
       </div>
