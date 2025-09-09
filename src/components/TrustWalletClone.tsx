@@ -247,10 +247,10 @@ const TrustWalletClone = () => {
             {/* Balance */}
             <div className="text-right">
               <div className="font-medium text-black text-base">
-                {formatBalance(crypto.balance)}
+                <div className="font-semibold text-gray-900 text-lg">17.087,778</div>
               </div>
               <div className="text-sm text-gray-500">
-                {formatCurrency(crypto.value)}
+                <div className="text-gray-500">$ 73.261.037,58</div>
               </div>
             </div>
           </div>
@@ -266,82 +266,81 @@ const TrustWalletClone = () => {
 
       {/* Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-  <div className="flex justify-around items-center">
-    {/* Página Inicial */}
-    <button className="flex flex-col items-center space-y-1 py-2">
-      <svg
-        className="w-6 h-6 text-blue-600"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-      </svg>
-      <span className="text-xs text-blue-600 font-medium">Página Inicial</span>
-    </button>
+        <div className="flex justify-around items-center">
+          {/* Página Inicial */}
+          <button className="flex flex-col items-center space-y-1 py-2">
+            <svg
+              className="w-6 h-6 text-blue-600"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+            <span className="text-xs text-blue-600 font-medium">Página Inicial</span>
+          </button>
 
-    {/* Em alta */}
-    <button className="flex flex-col items-center space-y-1 py-2">
-      <svg
-        className="w-6 h-6 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        strokeWidth="2"
-      >
-        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
-      </svg>
-      <span className="text-xs text-gray-400">Em alta</span>
-    </button>
+          {/* Em alta */}
+          <button className="flex flex-col items-center space-y-1 py-2">
+            <svg
+              className="w-6 h-6 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+            >
+              <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
+            </svg>
+            <span className="text-xs text-gray-400">Em alta</span>
+          </button>
 
-    {/* Swap */}
-    <button className="flex flex-col items-center space-y-1 py-2">
-      <svg
-        className="w-6 h-6 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        strokeWidth="2"
-      >
-        <path d="M16 3l4 4-4 4" />
-        <path d="M20 7H4" />
-        <path d="M8 21l-4-4 4-4" />
-        <path d="M4 17h16" />
-      </svg>
-      <span className="text-xs text-gray-400">Swap</span>
-    </button>
+          {/* Swap */}
+          <button className="flex flex-col items-center space-y-1 py-2">
+            <svg
+              className="w-6 h-6 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+            >
+              <path d="M16 3l4 4-4 4" />
+              <path d="M20 7H4" />
+              <path d="M8 21l-4-4 4-4" />
+              <path d="M4 17h16" />
+            </svg>
+            <span className="text-xs text-gray-400">Swap</span>
+          </button>
 
-    {/* Earn */}
-    <button className="flex flex-col items-center space-y-1 py-2">
-      <svg
-        className="w-6 h-6 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        strokeWidth="2"
-      >
-        <path d="M12 2v20" />
-        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-      </svg>
-      <span className="text-xs text-gray-400">Earn</span>
-    </button>
+          {/* Earn */}
+          <button className="flex flex-col items-center space-y-1 py-2">
+            <svg
+              className="w-6 h-6 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+            >
+              <path d="M12 2v20" />
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+            </svg>
+            <span className="text-xs text-gray-400">Earn</span>
+          </button>
 
-    {/* Descubra */}
-    <button className="flex flex-col items-center space-y-1 py-2">
-      <svg
-        className="w-6 h-6 text-gray-400"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-        strokeWidth="2"
-      >
-        <circle cx="12" cy="12" r="10" />
-        <polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88 16.24,7.76" />
-      </svg>
-      <span className="text-xs text-gray-400">Descubra</span>
-    </button>
-  </div>
-</div>
-
+          {/* Descubra */}
+          <button className="flex flex-col items-center space-y-1 py-2">
+            <svg
+              className="w-6 h-6 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88 16.24,7.76" />
+            </svg>
+            <span className="text-xs text-gray-400">Descubra</span>
+          </button>
+        </div>
+      </div>
 
 
       {/* Loading Overlay */}
