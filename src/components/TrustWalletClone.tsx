@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Settings, MoreHorizontal, Search, ScanLine, FileClock, Settings2, RefreshCw, ChevronDown, Compass, LineChart, ArrowDownToLine, Plus, Send, BarChart3 } from 'lucide-react';
 import { useCryptoData } from '@/hooks/useCryptoData';
 import TokensAlpha from './TokensAlpha';
+import Image from "next/image"; // This is from Next.js
+
 
 const TrustWalletClone = () => {
   // Define o saldo fixo em ETH
@@ -124,23 +126,23 @@ const TrustWalletClone = () => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-center space-x-8 px-4 mb-6">
+      <div className="flex justify-center space-x-6 px-4 mb-6">
         <button className="flex flex-col items-center space-y-2">
-          <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <path d="M7 17L17 7M17 7H7M17 7V17" />
+          <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <span className="text-sm text-gray-600">Enviar</span>
+          <span className="text-xs text-gray-600">Enviar</span>
         </button>
 
         <button className="flex flex-col items-center space-y-2">
-          <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <path d="M7 16L17 8M17 16L7 8" />
+          <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path d="M7 16L17 8M17 16L7 8" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <span className="text-sm text-gray-600">Swap</span>
+          <span className="text-xs text-gray-600">Swap</span>
         </button>
 
         <button 
@@ -148,19 +150,21 @@ const TrustWalletClone = () => {
           className="flex flex-col items-center space-y-2"
           disabled={isRefreshing}
         >
-          <div className={`w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center ${isRefreshing ? 'opacity-70' : ''}`}>
-            <RefreshCw className={`w-5 h-5 text-white ${isRefreshing ? 'animate-spin' : ''}`} />
+          <div className={`w-12 h-12 bg-blue-700 rounded-2xl flex items-center justify-center hover:bg-blue-600 transition-colors ${isRefreshing ? 'opacity-70' : ''}`}>
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </div>
-          <span className="text-sm text-gray-600">Atualizar</span>
+          <span className="text-xs text-gray-600">Recarregar</span>
         </button>
 
         <button className="flex flex-col items-center space-y-2">
-          <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" />
+          <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-          <span className="text-sm text-gray-600">Vender</span>
+          <span className="text-xs text-gray-600">Vender</span>
         </button>
       </div>
 
@@ -230,6 +234,81 @@ const TrustWalletClone = () => {
                 <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
               ) : (
                 <span>$ {formatCurrency(usdBalance)}</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+     {/* Crypto Item - Ethereum */}
+        <div className="flex items-center py-2">
+          {/* Ethereum Logo */}
+     <div className="w-12 h-12 flex items-center justify-center">
+  <svg
+    className="w-12 h-12"
+    viewBox="0 0 64 64"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    {/* outer filled circle */}
+    <circle cx="32" cy="32" r="30" fill="#1E88E5" />
+    {/* ring (creates inner ring effect) */}
+    <circle cx="32" cy="32" r="24" fill="none" stroke="#ffffff" strokeWidth="4" />
+    {/* small gap ring to match the visual of the original */}
+    <circle cx="32" cy="32" r="20" fill="#1E88E5" />
+    {/* inner white disc for contrast */}
+    <circle cx="32" cy="32" r="13.5" fill="#ffffff" />
+    {/* $ sign (stroke) */}
+    <path
+      d="M33 18c-5 0-6.5 2.2-6.5 4.5 0 2.8 2.2 4 5.5 4.8 3.3.8 5.5 1.7 5.5 4.7 0 3-2.7 4.5-6 4.5"
+      fill="none"
+      stroke="#1E88E5"
+      strokeWidth="2.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      transform="translate(0,2)"
+    />
+    <line x1="32" y1="12" x2="32" y2="52" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" opacity="0.0"/>
+    {/* small horizontal caps to mimic S terminals */}
+    <line x1="26.5" y1="23.5" x2="37.5" y2="23.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
+    <line x1="26.5" y1="40.5" x2="37.5" y2="40.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
+  </svg>
+</div>
+
+
+          {/* Token Info */}
+          <div className="flex-1 ml-3">
+            <div className="flex items-center space-x-2">
+              <span className="font-medium text-black text-base">USDC</span>
+              <span className="text-sm text-gray-500">Ethereum</span>
+            </div>
+
+            {/* Preço e porcentagem */}
+            <div className="flex items-center space-x-2 mt-0.5">
+              {isLoading ? (
+                <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
+              ) : (
+                <>
+                  <span className="text-sm text-gray-500">
+                    $1261,32 
+                  </span>
+                  <span className={`text-sm ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                  
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Balance */}
+          <div className="text-right">
+            <div className="font-semibold text-gray-900 text-lg">
+                $1261,32 
+            </div>
+            <div className="text-sm text-gray-500">
+              {isLoading ? (
+                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
+              ) : (
+                <span>$1261,32 </span>
               )}
             </div>
           </div>
