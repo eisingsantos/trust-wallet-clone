@@ -126,7 +126,7 @@ const TrustWalletClone = () => {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-center space-x-6 px-4 mb-6">
+      <div className="flex justify-center space-x-2 px-4 mb-6">
         <button className="flex flex-col items-center space-y-2">
           <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
             <svg

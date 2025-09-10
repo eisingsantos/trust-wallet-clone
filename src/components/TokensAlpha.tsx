@@ -92,7 +92,7 @@ const TokensAlpha = () => {
 
   return (
     <div className="px-4 mb-6">
-      <h3 className="text-xl font-bold text-gray-900 mb-4">Tokens Alpha</h3>
+      <h3 className="text-xl font-bold text-gray-900 mb-2">Tokens Alpha</h3>
       
       <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2">
         {isLoading ? (
