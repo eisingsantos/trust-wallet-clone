@@ -105,7 +105,7 @@ const TrustWalletClone = () => {
           </div>
         ) : (
           <>
-            <div className="text-4xl font-bold text-gray-900 ">
+            <div className="text-5xl font-bold text-gray-900 ">
               $ {formatCurrency(totalUsdBalance)}
             </div>
             <div className={`flex items-center justify-center text-base mb-4 ${totalPercentChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
