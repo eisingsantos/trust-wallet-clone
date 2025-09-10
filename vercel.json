@@ -3,8 +3,5 @@
     "src/app/api/crypto/route.ts": {
       "maxDuration": 10
     }
-  },
-  "env": {
-    "COINMARKETCAP_API_KEY": "@coinmarketcap_api_key"
   }
 }
