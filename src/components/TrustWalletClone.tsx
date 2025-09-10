@@ -389,11 +389,19 @@ const TrustWalletClone = () => {
           </button>
 
           <button className="flex flex-col items-center flex-1 space-y-1 py-2 relative">
-            <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <circle cx="12" cy="12" r="3" />
-              <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1" />
+            {/* O SVG foi modificado aqui */}
+            <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              {/* Este path desenha a moeda com o furo no meio */}
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM12 8.5L14.5 11L12 13.5L9.5 11L12 8.5Z"
+              />
+              {/* Este path desenha a base/suporte da moeda */}
+              <path d="M6 20H18V21H6V20Z" />
             </svg>
             <span className="text-xs text-gray-400">Earn</span>
+            {/* A notificação permanece a mesma */}
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 

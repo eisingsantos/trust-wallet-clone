@@ -105,7 +105,7 @@ const TokensAlpha = () => {
           tokens.map((token) => (
             <div
               key={token.id}
-              className="flex-shrink-0 w-[200px] p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-gray-100 transition-colors cursor-pointer"
+              className="flex-shrink-0 w-[220px] p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-gray-100 transition-colors cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 {/* Left side - Token info */}
