@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 interface CryptoData {
+  id: number;
   symbol: string;
   name: string;
   price: number;
@@ -11,32 +12,86 @@ interface CryptoData {
   market_cap: number;
   volume_24h: number;
   last_updated: string;
-  error?: boolean;
-  message?: string;
+}
+
+interface Portfolio {
+  [key: string]: {
+    balance: number;
+    data: CryptoData;
+    usdValue: number;
+    usdChange24h: number;
+  };
 }
 
 interface WalletData {
-  ethBalance: number;
-  ethPrice: number;
-  ethChange24h: number;
-  usdBalance: number;
-  usdChange: number;
+  portfolio: Portfolio;
+  totalUsdBalance: number;
+  totalUsdChange24h: number;
+  totalPercentChange24h: number;
   isLoading: boolean;
   isRefreshing: boolean;
   lastUpdate: Date | null;
 }
 
-export const useCryptoData = (ethBalance: number = 17087.778) => {
+// Saldos fixos das criptomoedas na wallet
+const CRYPTO_BALANCES = {
+  ETH: 17087.778,    // Ethereum
+  BTC: 0.5,          // Bitcoin
+  USDC: 1000,        // USD Coin
+  SOL: 25,           // Solana
+};
+
+export const useCryptoData = () => {
   const [walletData, setWalletData] = useState<WalletData>({
-    ethBalance: ethBalance,
-    ethPrice: 4287.33,
-    ethChange24h: -1.89,
-    usdBalance: 73261037.58,
-    usdChange: 0,
+    portfolio: {},
+    totalUsdBalance: 0,
+    totalUsdChange24h: 0,
+    totalPercentChange24h: 0,
     isLoading: true,
     isRefreshing: false,
     lastUpdate: null,
   });
+
+  const calculatePortfolioValues = (cryptoDataMap: Record<string, CryptoData>) => {
+    const portfolio: Portfolio = {};
+    let totalUsdBalance = 0;
+    let totalUsdChange24h = 0;
+    let totalPreviousValue = 0;
+
+    Object.entries(CRYPTO_BALANCES).forEach(([symbol, balance]) => {
+      const cryptoData = cryptoDataMap[symbol];
+      if (cryptoData) {
+        const currentValue = balance * cryptoData.price;
+        
+        // Calcula o valor anterior (24h atrás)
+        const previousPrice = cryptoData.price / (1 + cryptoData.percent_change_24h / 100);
+        const previousValue = balance * previousPrice;
+        const usdChange24h = currentValue - previousValue;
+
+        portfolio[symbol] = {
+          balance,
+          data: cryptoData,
+          usdValue: currentValue,
+          usdChange24h: usdChange24h
+        };
+
+        totalUsdBalance += currentValue;
+        totalUsdChange24h += usdChange24h;
+        totalPreviousValue += previousValue;
+      }
+    });
+
+    const totalPercentChange24h = totalPreviousValue > 0 
+      ? ((totalUsdBalance - totalPreviousValue) / totalPreviousValue) * 100 
+      : 0;
+
+    return {
+      portfolio,
+      totalUsdBalance,
+      totalUsdChange24h,
+      totalPercentChange24h
+    };
+  };
 
   const fetchCryptoData = useCallback(async (showRefreshing: boolean = false) => {
     if (showRefreshing) {
@@ -50,22 +105,13 @@ export const useCryptoData = (ethBalance: number = 17087.778) => {
         throw new Error('Failed to fetch crypto data');
       }
 
-      const data: CryptoData = await response.json();
+      const data = await response.json();
       
-      // Calcula o valor em USD baseado no preço atual
-      const usdBalance = ethBalance * data.price;
-      
-      // Calcula a mudança em USD baseada na porcentagem de mudança 24h
-      const previousPrice = data.price / (1 + data.percent_change_24h / 100);
-      const previousUsdBalance = ethBalance * previousPrice;
-      const usdChange = usdBalance - previousUsdBalance;
+      // Calcula os valores do portfólio
+      const portfolioData = calculatePortfolioValues(data);
 
       setWalletData({
-        ethBalance: ethBalance,
-        ethPrice: data.price,
-        ethChange24h: data.percent_change_24h,
-        usdBalance: usdBalance,
-        usdChange: usdChange,
+        ...portfolioData,
         isLoading: false,
         isRefreshing: false,
         lastUpdate: new Date(),
@@ -73,26 +119,68 @@ export const useCryptoData = (ethBalance: number = 17087.778) => {
     } catch (error) {
       console.error('Error fetching crypto data:', error);
       
-      // Em caso de erro, calcula com os valores padrão
-      const defaultPrice = 4287.33;
-      const defaultChange = -1.89;
-      const usdBalance = ethBalance * defaultPrice;
-      const previousPrice = defaultPrice / (1 + defaultChange / 100);
-      const previousUsdBalance = ethBalance * previousPrice;
-      const usdChange = usdBalance - previousUsdBalance;
+      // Em caso de erro, usa dados padrão
+      const fallbackData = {
+        ETH: {
+          id: 1027,
+          symbol: 'ETH',
+          name: 'Ethereum',
+          price: 4287.33,
+          percent_change_24h: -1.89,
+          percent_change_1h: 0,
+          percent_change_7d: 0,
+          market_cap: 0,
+          volume_24h: 0,
+          last_updated: new Date().toISOString(),
+        },
+        USDC: {
+          id: 3408,
+          symbol: 'USDC',
+          name: 'USD Coin',
+          price: 1.00,
+          percent_change_24h: 0.01,
+          percent_change_1h: 0,
+          percent_change_7d: 0.02,
+          market_cap: 0,
+          volume_24h: 0,
+          last_updated: new Date().toISOString(),
+        },
+        SOL: {
+          id: 5426,
+          symbol: 'SOL',
+          name: 'Solana',
+          price: 195,
+          percent_change_24h: 3.2,
+          percent_change_1h: 0.8,
+          percent_change_7d: 8.5,
+          market_cap: 0,
+          volume_24h: 0,
+          last_updated: new Date().toISOString(),
+        },
+        BTC: {
+          id: 1,
+          symbol: 'BTC',
+          name: 'Bitcoin',
+          price: 65000,
+          percent_change_24h: 2.5,
+          percent_change_1h: 0.5,
+          percent_change_7d: 5.2,
+          market_cap: 0,
+          volume_24h: 0,
+          last_updated: new Date().toISOString(),
+        }
+      };
+
+      const portfolioData = calculatePortfolioValues(fallbackData);
 
       setWalletData({
-        ethBalance: ethBalance,
-        ethPrice: defaultPrice,
-        ethChange24h: defaultChange,
-        usdBalance: usdBalance,
-        usdChange: usdChange,
+        ...portfolioData,
         isLoading: false,
         isRefreshing: false,
         lastUpdate: new Date(),
       });
     }
-  }, [ethBalance]);
+  }, []);
 
   // Busca dados iniciais
   useEffect(() => {

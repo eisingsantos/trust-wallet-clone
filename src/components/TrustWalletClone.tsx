@@ -3,28 +3,23 @@ import React, { useState, useEffect } from 'react';
 import { Settings, MoreHorizontal, Search, ScanLine, FileClock, Settings2, RefreshCw, ChevronDown, Compass, LineChart, ArrowDownToLine, Plus, Send, BarChart3 } from 'lucide-react';
 import { useCryptoData } from '@/hooks/useCryptoData';
 import TokensAlpha from './TokensAlpha';
-import Image from "next/image"; // This is from Next.js
-
+import CryptoIcon from './CryptoIcons';
 
 const TrustWalletClone = () => {
-  // Define o saldo fixo em ETH
-  const ETH_BALANCE = 17087.778;
-
   // Usa o hook para buscar dados reais da API
   const {
-    ethPrice,
-    ethChange24h,
-    usdBalance,
-    usdChange,
+    portfolio,
+    totalUsdBalance,
+    totalUsdChange24h,
+    totalPercentChange24h,
     isLoading,
     isRefreshing,
     refresh,
     lastUpdate
-  } = useCryptoData(ETH_BALANCE);
+  } = useCryptoData();
 
   // Força atualização ao montar o componente (refresh da página)
   useEffect(() => {
-    // O hook já faz a busca inicial, mas isso garante que sempre busque dados novos
     console.log('Página carregada/recarregada - buscando cotação atualizada...');
   }, []);
 
@@ -36,18 +31,12 @@ const TrustWalletClone = () => {
     }).format(value);
   };
 
-  // Função para formatar saldo ETH com vírgula como separador de milhares
-  const formatEthBalance = (value: number) => {
-    // Separa a parte inteira da decimal
-    const parts = value.toString().split('.');
-    const integerPart = parts[0];
-    const decimalPart = parts[1] || '';
-
-    // Formata a parte inteira com pontos como separador de milhares
-    const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-    // Retorna com vírgula como separador decimal
-    return `${formattedInteger},${decimalPart.padEnd(3, '0').substring(0, 3)}`;
+  // Função para formatar saldo com vírgula como separador decimal
+  const formatBalance = (value: number, decimals: number = 3) => {
+    return new Intl.NumberFormat('pt-BR', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    }).format(value);
   };
 
   // Função para formatar porcentagem
@@ -62,6 +51,9 @@ const TrustWalletClone = () => {
   const handleRefresh = async () => {
     await refresh();
   };
+
+  // Ordena o portfólio por valor USD (maior para menor)
+  const sortedPortfolio = Object.entries(portfolio).sort((a, b) => b[1].usdValue - a[1].usdValue);
 
   return (
     <div className="min-h-screen bg-white">
@@ -114,15 +106,14 @@ const TrustWalletClone = () => {
         ) : (
           <>
             <div className="text-4xl font-bold text-gray-900 ">
-              $ {formatCurrency(usdBalance)}
+              $ {formatCurrency(totalUsdBalance)}
             </div>
-            <div className={`flex items-center justify-center text-base mb-4 ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
-              <span className="text-sm">{ethChange24h < 0 ? '↓' : '↑'}</span>
-              $ {formatCurrency(Math.abs(usdChange))} ({formatPercentage(ethChange24h)}%)
+            <div className={`flex items-center justify-center text-base mb-4 ${totalPercentChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
+              <span className="text-sm">{totalPercentChange24h < 0 ? '↓' : '↑'}</span>
+              $ {formatCurrency(Math.abs(totalUsdChange24h))} ({formatPercentage(totalPercentChange24h)}%)
             </div>
           </>
         )}
-
       </div>
 
       {/* Action Buttons */}
@@ -147,7 +138,6 @@ const TrustWalletClone = () => {
                 strokeLinejoin="round"
               />
             </svg>
-
           </div>
           <span className="text-xs text-gray-600">Enviar</span>
         </button>
@@ -184,7 +174,6 @@ const TrustWalletClone = () => {
           <span className="text-xs text-gray-600">Recarregar</span>
         </button>
 
-
         <button className="flex flex-col items-center space-y-2">
           <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
             <svg
@@ -194,20 +183,15 @@ const TrustWalletClone = () => {
               viewBox="0 0 24 24"
               strokeWidth={2.5}
             >
-              {/* base do prédio */}
               <path d="M3 10h18" strokeLinecap="round" strokeLinejoin="round" />
-              {/* telhado */}
               <path d="M2 10l10-6 10 6" strokeLinecap="round" strokeLinejoin="round" />
-              {/* colunas */}
               <path d="M6 10v8" strokeLinecap="round" />
               <path d="M10 10v8" strokeLinecap="round" />
               <path d="M14 10v8" strokeLinecap="round" />
               <path d="M18 10v8" strokeLinecap="round" />
-              {/* base inferior */}
               <path d="M4 20h16" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
-
           <span className="text-xs text-gray-600">Vender</span>
         </button>
       </div>
@@ -234,129 +218,61 @@ const TrustWalletClone = () => {
         </div>
       </div>
 
-      {/* Crypto Item - Ethereum */}
+      {/* Crypto Items - Lista dinâmica do portfólio */}
       <div className="bg-white px-4 py-4">
-        <div className="flex items-center py-2">
-          {/* Ethereum Logo */}
-          <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200">
-            <svg className="w-6 h-6 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z" />
-            </svg>
-          </div>
-
-          {/* Token Info */}
-          <div className="flex-1 ml-3">
-            <div className="flex items-center space-x-2">
-              <span className="font-medium text-black text-base">ETH</span>
-              <span className="text-sm text-gray-500">Ethereum</span>
+        {isLoading ? (
+          // Loading skeleton para múltiplas criptomoedas
+          Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="flex items-center py-2 animate-pulse">
+              <div className="w-12 h-12 bg-gray-200 rounded-full"></div>
+              <div className="flex-1 ml-3">
+                <div className="h-4 bg-gray-200 rounded w-20 mb-1"></div>
+                <div className="h-3 bg-gray-200 rounded w-32"></div>
+              </div>
+              <div className="text-right">
+                <div className="h-4 bg-gray-200 rounded w-24 mb-1"></div>
+                <div className="h-3 bg-gray-200 rounded w-20"></div>
+              </div>
             </div>
+          ))
+        ) : (
+          sortedPortfolio.map(([symbol, data]) => (
+            <div key={symbol} className="flex items-center py-2">
+              {/* Crypto Logo */}
+              <div className="w-12 h-12 flex items-center justify-center">
+                <CryptoIcon symbol={symbol} size={48} />
+              </div>
 
-            {/* Preço e porcentagem */}
-            <div className="flex items-center space-x-2 mt-0.5">
-              {isLoading ? (
-                <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
-              ) : (
-                <>
+              {/* Token Info */}
+              <div className="flex-1 ml-3">
+                <div className="flex items-center space-x-2">
+                  <span className="font-medium text-black text-base">{symbol}</span>
+                  <span className="text-sm text-gray-500">{data.data.name}</span>
+                </div>
+
+                {/* Preço e porcentagem */}
+                <div className="flex items-center space-x-2 mt-0.5">
                   <span className="text-sm text-gray-500">
-                    $ {formatCurrency(ethPrice)}
+                    $ {formatCurrency(data.data.price)}
                   </span>
-                  <span className={`text-sm ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                    {ethChange24h < 0 ? '↓' : '↑'} {formatPercentage(ethChange24h)}%
+                  <span className={`text-sm ${data.data.percent_change_24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                    {data.data.percent_change_24h < 0 ? '↓' : '↑'} {formatPercentage(data.data.percent_change_24h)}%
                   </span>
-                </>
-              )}
-            </div>
-          </div>
+                </div>
+              </div>
 
-          {/* Balance */}
-          <div className="text-right">
-            <div className="font-semibold text-gray-900 text-lg">
-              {formatEthBalance(ETH_BALANCE)}
+              {/* Balance */}
+              <div className="text-right">
+                <div className="font-semibold text-gray-900 text-lg">
+                  {formatBalance(data.balance, symbol === 'USDC' ? 2 : 3)}
+                </div>
+                <div className="text-sm text-gray-500">
+                  $ {formatCurrency(data.usdValue)}
+                </div>
+              </div>
             </div>
-            <div className="text-sm text-gray-500">
-              {isLoading ? (
-                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
-              ) : (
-                <span>$ {formatCurrency(usdBalance)}</span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Crypto Item - Ethereum */}
-        <div className="flex items-center py-2">
-          {/* Ethereum Logo */}
-          <div className="w-12 h-12 flex items-center justify-center">
-            <svg
-              className="w-12 h-12"
-              viewBox="0 0 64 64"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              {/* outer filled circle */}
-              <circle cx="32" cy="32" r="30" fill="#1E88E5" />
-              {/* ring (creates inner ring effect) */}
-              <circle cx="32" cy="32" r="24" fill="none" stroke="#ffffff" strokeWidth="4" />
-              {/* small gap ring to match the visual of the original */}
-              <circle cx="32" cy="32" r="20" fill="#1E88E5" />
-              {/* inner white disc for contrast */}
-              <circle cx="32" cy="32" r="13.5" fill="#ffffff" />
-              {/* $ sign (stroke) */}
-              <path
-                d="M33 18c-5 0-6.5 2.2-6.5 4.5 0 2.8 2.2 4 5.5 4.8 3.3.8 5.5 1.7 5.5 4.7 0 3-2.7 4.5-6 4.5"
-                fill="none"
-                stroke="#1E88E5"
-                strokeWidth="2.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                transform="translate(0,2)"
-              />
-              <line x1="32" y1="12" x2="32" y2="52" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" opacity="0.0" />
-              {/* small horizontal caps to mimic S terminals */}
-              <line x1="26.5" y1="23.5" x2="37.5" y2="23.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
-              <line x1="26.5" y1="40.5" x2="37.5" y2="40.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
-          </div>
-
-
-          {/* Token Info */}
-          <div className="flex-1 ml-3">
-            <div className="flex items-center space-x-2">
-              <span className="font-medium text-black text-base">USDC</span>
-              <span className="text-sm text-gray-500">Ethereum</span>
-            </div>
-
-            {/* Preço e porcentagem */}
-            <div className="flex items-center space-x-2 mt-0.5">
-              {isLoading ? (
-                <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
-              ) : (
-                <>
-                  <span className="text-sm text-gray-500">
-                    $0,08
-                  </span>
-                  <span className={`text-sm ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
-
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Balance */}
-          <div className="text-right">
-            <div className="font-semibold text-gray-900 text-lg">
-              $0,08
-            </div>
-            <div className="text-sm text-gray-500">
-              {isLoading ? (
-                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
-              ) : (
-                <span>$0,08 </span>
-              )}
-            </div>
-          </div>
-        </div>
+          ))
+        )}
 
         {/* Manage Button */}
         <div className="text-center mt-6 mb-4">
@@ -389,19 +305,15 @@ const TrustWalletClone = () => {
           </button>
 
           <button className="flex flex-col items-center flex-1 space-y-1 py-2 relative">
-            {/* O SVG foi modificado aqui */}
             <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              {/* Este path desenha a moeda com o furo no meio */}
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
                 d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM12 8.5L14.5 11L12 13.5L9.5 11L12 8.5Z"
               />
-              {/* Este path desenha a base/suporte da moeda */}
               <path d="M6 20H18V21H6V20Z" />
             </svg>
             <span className="text-xs text-gray-400">Earn</span>
-            {/* A notificação permanece a mesma */}
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
 
@@ -414,8 +326,6 @@ const TrustWalletClone = () => {
           </button>
         </div>
       </div>
-
-
 
       {/* Loading Overlay */}
       {isRefreshing && (
