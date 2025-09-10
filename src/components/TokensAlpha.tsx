@@ -98,14 +98,14 @@ const TokensAlpha = () => {
         {isLoading ? (
           // Loading state
           <>
-            <div className="flex-shrink-0 w-[280px] h-[88px] bg-gray-100 rounded-2xl animate-pulse" />
-            <div className="flex-shrink-0 w-[280px] h-[88px] bg-gray-100 rounded-2xl animate-pulse" />
+            <div className="flex-shrink-0 w-[250px] h-[88px] bg-gray-100 rounded-2xl animate-pulse" />
+            <div className="flex-shrink-0 w-[250px] h-[88px] bg-gray-100 rounded-2xl animate-pulse" />
           </>
         ) : (
           tokens.map((token) => (
             <div
               key={token.id}
-              className="flex-shrink-0 w-[280px] p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-gray-100 transition-colors cursor-pointer"
+              className="flex-shrink-0 w-[200px] p-4 bg-gray-50 rounded-2xl border border-gray-100 hover:bg-gray-100 transition-colors cursor-pointer"
             >
               <div className="flex items-center justify-between">
                 {/* Left side - Token info */}
@@ -163,7 +163,7 @@ const TokensAlpha = () => {
         
         {/* Placeholder cards se houver menos de 2 tokens */}
         {!isLoading && tokens.length < 2 && (
-          <div className="flex-shrink-0 w-[280px] p-4 bg-gray-50 rounded-2xl border border-gray-100">
+          <div className="flex-shrink-0 w-[250px] p-4 bg-gray-50 rounded-2xl border border-gray-100">
             <div className="flex items-center justify-center h-full">
               <span className="text-gray-400 text-sm">Mais tokens em breve</span>
             </div>
