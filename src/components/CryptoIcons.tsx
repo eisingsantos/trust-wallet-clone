@@ -13,8 +13,8 @@ const CryptoIcon: React.FC<CryptoIconProps> = ({ symbol, size = 48, className = 
     switch (symbol.toUpperCase()) {
       case 'ETH':
         return '/eth.png';
-      case 'USDC':
-        return '/usdc.png';
+      case 'USDT':
+        return '/tether1.png';
       case 'SOL':
         return '/solana.png';
       case 'BTC':
@@ -28,8 +28,8 @@ const CryptoIcon: React.FC<CryptoIconProps> = ({ symbol, size = 48, className = 
     switch (symbol.toUpperCase()) {
       case 'ETH':
         return 'Ethereum';
-      case 'USDC':
-        return 'USD Coin';
+      case 'USDT':
+        return 'Tether';
       case 'SOL':
         return 'Solana';
       case 'BTC':

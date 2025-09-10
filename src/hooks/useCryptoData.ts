@@ -37,7 +37,7 @@ interface WalletData {
 const CRYPTO_BALANCES = {
   ETH: 17087.778,    // Ethereum
   BTC: 0.5,          // Bitcoin
-  USDC: 1000,        // USD Coin
+  USDT: 1000,        // USD Coin
   SOL: 25,           // Solana
 };
 
@@ -133,10 +133,10 @@ export const useCryptoData = () => {
           volume_24h: 0,
           last_updated: new Date().toISOString(),
         },
-        USDC: {
-          id: 3408,
-          symbol: 'USDC',
-          name: 'USD Coin',
+        USDT: {
+          id: 825,
+          symbol: 'USDT',
+          name: 'Tether',
           price: 1.00,
           percent_change_24h: 0.01,
           percent_change_1h: 0,

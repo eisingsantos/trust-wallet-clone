@@ -264,7 +264,7 @@ const TrustWalletClone = () => {
               {/* Balance */}
               <div className="text-right">
                 <div className="font-semibold text-gray-900 text-lg">
-                  {formatBalance(data.balance, symbol === 'USDC' ? 2 : 3)}
+                  {formatBalance(data.balance, symbol === 'USDT' ? 2 : 3)}
                 </div>
                 <div className="text-sm text-gray-500">
                   $ {formatCurrency(data.usdValue)}

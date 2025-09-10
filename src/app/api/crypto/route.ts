@@ -12,7 +12,7 @@ const CACHE_DURATION = 10000; // 1 minuto em millisegundos
 const CRYPTO_IDS = {
   ETH: 1027,   // Ethereum
   BTC: 1,      // Bitcoin
-  USDC: 3408,  // USD Coin
+  USDT: 825,  // USD Coin
   SOL: 5426,   // Solana
 };
 
@@ -85,10 +85,10 @@ export async function GET() {
         volume_24h: 0,
         last_updated: new Date().toISOString(),
       },
-      USDC: {
-        id: 3408,
-        symbol: 'USDC',
-        name: 'USD Coin',
+      USDT: {
+        id: 825,
+        symbol: 'USDT',
+        name: 'Tether',
         price: 1.00,
         percent_change_24h: 0.01,
         percent_change_1h: 0,
