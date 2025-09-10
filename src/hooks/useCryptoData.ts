@@ -191,7 +191,7 @@ export const useCryptoData = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       fetchCryptoData(false);
-    }, 60000); // 60 segundos
+    }, 10000); // 60 segundos
 
     return () => clearInterval(interval);
   }, [fetchCryptoData]);

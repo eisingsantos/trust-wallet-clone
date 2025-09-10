@@ -6,18 +6,14 @@ const COINMARKETCAP_API_URL = 'https://pro-api.coinmarketcap.com/v1/cryptocurren
 
 // Cache para evitar muitas requisições
 let cache: { data: any; timestamp: number } | null = null;
-const CACHE_DURATION = 60000; // 1 minuto em millisegundos
+const CACHE_DURATION = 10000; // 1 minuto em millisegundos
 
 // IDs das criptomoedas na CoinMarketCap
 const CRYPTO_IDS = {
   ETH: 1027,   // Ethereum
   BTC: 1,      // Bitcoin
   USDC: 3408,  // USD Coin
-  BNB: 1839,   // Binance Coin
-  ADA: 2010,   // Cardano
   SOL: 5426,   // Solana
-  MATIC: 3890, // Polygon
-  LINK: 1975   // Chainlink
 };
 
 export async function GET() {
