@@ -9,7 +9,7 @@ import Image from "next/image"; // This is from Next.js
 const TrustWalletClone = () => {
   // Define o saldo fixo em ETH
   const ETH_BALANCE = 17087.778;
-  
+
   // Usa o hook para buscar dados reais da API
   const {
     ethPrice,
@@ -42,10 +42,10 @@ const TrustWalletClone = () => {
     const parts = value.toString().split('.');
     const integerPart = parts[0];
     const decimalPart = parts[1] || '';
-    
+
     // Formata a parte inteira com pontos como separador de milhares
     const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    
+
     // Retorna com vírgula como separador decimal
     return `${formattedInteger},${decimalPart.padEnd(3, '0').substring(0, 3)}`;
   };
@@ -84,7 +84,7 @@ const TrustWalletClone = () => {
         </div>
 
         <div className="flex items-center space-x-4">
-          <button 
+          <button
             onClick={handleRefresh}
             className="w-12 h-12 hover:bg-gray-50 rounded-lg transition-colors flex items-center justify-center"
             disabled={isRefreshing}
@@ -122,7 +122,7 @@ const TrustWalletClone = () => {
             </div>
           </>
         )}
-       
+
       </div>
 
       {/* Action Buttons */}
@@ -145,7 +145,7 @@ const TrustWalletClone = () => {
           <span className="text-xs text-gray-600">Swap</span>
         </button>
 
-        <button 
+        <button
           onClick={handleRefresh}
           className="flex flex-col items-center space-y-2"
           disabled={isRefreshing}
@@ -239,40 +239,40 @@ const TrustWalletClone = () => {
           </div>
         </div>
 
-     {/* Crypto Item - Ethereum */}
+        {/* Crypto Item - Ethereum */}
         <div className="flex items-center py-2">
           {/* Ethereum Logo */}
-     <div className="w-12 h-12 flex items-center justify-center">
-  <svg
-    className="w-12 h-12"
-    viewBox="0 0 64 64"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    {/* outer filled circle */}
-    <circle cx="32" cy="32" r="30" fill="#1E88E5" />
-    {/* ring (creates inner ring effect) */}
-    <circle cx="32" cy="32" r="24" fill="none" stroke="#ffffff" strokeWidth="4" />
-    {/* small gap ring to match the visual of the original */}
-    <circle cx="32" cy="32" r="20" fill="#1E88E5" />
-    {/* inner white disc for contrast */}
-    <circle cx="32" cy="32" r="13.5" fill="#ffffff" />
-    {/* $ sign (stroke) */}
-    <path
-      d="M33 18c-5 0-6.5 2.2-6.5 4.5 0 2.8 2.2 4 5.5 4.8 3.3.8 5.5 1.7 5.5 4.7 0 3-2.7 4.5-6 4.5"
-      fill="none"
-      stroke="#1E88E5"
-      strokeWidth="2.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      transform="translate(0,2)"
-    />
-    <line x1="32" y1="12" x2="32" y2="52" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" opacity="0.0"/>
-    {/* small horizontal caps to mimic S terminals */}
-    <line x1="26.5" y1="23.5" x2="37.5" y2="23.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
-    <line x1="26.5" y1="40.5" x2="37.5" y2="40.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
-  </svg>
-</div>
+          <div className="w-12 h-12 flex items-center justify-center">
+            <svg
+              className="w-12 h-12"
+              viewBox="0 0 64 64"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              {/* outer filled circle */}
+              <circle cx="32" cy="32" r="30" fill="#1E88E5" />
+              {/* ring (creates inner ring effect) */}
+              <circle cx="32" cy="32" r="24" fill="none" stroke="#ffffff" strokeWidth="4" />
+              {/* small gap ring to match the visual of the original */}
+              <circle cx="32" cy="32" r="20" fill="#1E88E5" />
+              {/* inner white disc for contrast */}
+              <circle cx="32" cy="32" r="13.5" fill="#ffffff" />
+              {/* $ sign (stroke) */}
+              <path
+                d="M33 18c-5 0-6.5 2.2-6.5 4.5 0 2.8 2.2 4 5.5 4.8 3.3.8 5.5 1.7 5.5 4.7 0 3-2.7 4.5-6 4.5"
+                fill="none"
+                stroke="#1E88E5"
+                strokeWidth="2.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                transform="translate(0,2)"
+              />
+              <line x1="32" y1="12" x2="32" y2="52" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" opacity="0.0" />
+              {/* small horizontal caps to mimic S terminals */}
+              <line x1="26.5" y1="23.5" x2="37.5" y2="23.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
+              <line x1="26.5" y1="40.5" x2="37.5" y2="40.5" stroke="#1E88E5" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </div>
 
 
           {/* Token Info */}
@@ -289,10 +289,10 @@ const TrustWalletClone = () => {
               ) : (
                 <>
                   <span className="text-sm text-gray-500">
-                    $1261,32 
+                    $0,08
                   </span>
                   <span className={`text-sm ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                  
+
                   </span>
                 </>
               )}
@@ -302,13 +302,13 @@ const TrustWalletClone = () => {
           {/* Balance */}
           <div className="text-right">
             <div className="font-semibold text-gray-900 text-lg">
-                $1261,32 
+              $0,08
             </div>
             <div className="text-sm text-gray-500">
               {isLoading ? (
                 <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
               ) : (
-                <span>$1261,32 </span>
+                <span>$0,08 </span>
               )}
             </div>
           </div>

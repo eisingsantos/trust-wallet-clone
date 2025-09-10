@@ -1,7 +1,7 @@
 // src/app/api/tokens/route.ts
 import { NextResponse } from 'next/server';
 
-const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
+const COINMARKETCAP_API_KEY = 'c114ac1d-9f4d-4df6-a8db-cb09ae4f139d';
 const COINMARKETCAP_API_URL = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest';
 
 // IDs dos tokens na CoinMarketCap
