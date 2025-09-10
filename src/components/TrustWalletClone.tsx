@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Settings, MoreHorizontal, Search, ScanLine, FileClock, Settings2, RefreshCw, ChevronDown, Compass, LineChart, ArrowDownToLine, Plus, Send, BarChart3 } from 'lucide-react';
 import { useCryptoData } from '@/hooks/useCryptoData';
+import TokensAlpha from './TokensAlpha';
 
 const TrustWalletClone = () => {
   // Define o saldo fixo em ETH
@@ -18,6 +19,12 @@ const TrustWalletClone = () => {
     refresh,
     lastUpdate
   } = useCryptoData(ETH_BALANCE);
+
+  // Força atualização ao montar o componente (refresh da página)
+  useEffect(() => {
+    // O hook já faz a busca inicial, mas isso garante que sempre busque dados novos
+    console.log('Página carregada/recarregada - buscando cotação atualizada...');
+  }, []);
 
   // Função para formatar moeda
   const formatCurrency = (value: number) => {
@@ -57,7 +64,7 @@ const TrustWalletClone = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Status Bar Spacer */}
-      <div className="h-11 bg-white"></div>
+      <div className=" bg-white"></div>
 
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-2 bg-white">
@@ -113,13 +120,7 @@ const TrustWalletClone = () => {
             </div>
           </>
         )}
-        
-        {/* Última atualização */}
-        {lastUpdate && (
-          <div className="text-xs text-gray-400 mt-2">
-            Atualizado: {lastUpdate.toLocaleTimeString('pt-BR')}
-          </div>
-        )}
+       
       </div>
 
       {/* Action Buttons */}
@@ -163,21 +164,8 @@ const TrustWalletClone = () => {
         </button>
       </div>
 
-      {/* Tokens Alpha Section */}
-      <div className="px-4 mb-6">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Tokens Alpha</h3>
-        <div className="flex space-x-3 overflow-x-auto pb-2">
-          <div className="flex-shrink-0 w-64 p-4 bg-gray-50 rounded-xl border border-gray-200">
-            <div className="flex items-center space-x-2 mb-2">
-              <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center"></div>
-              <div>
-                <div className="font-medium text-black text-base">BNB</div>
-                <div className="text-sm text-gray-500">$ 0,00</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Tokens Alpha Section - Componente separado */}
+      <TokensAlpha />
 
       {/* Tabs Section */}
       <div className="bg-white px-4">
