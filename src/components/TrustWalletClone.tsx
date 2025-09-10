@@ -105,7 +105,7 @@ const TrustWalletClone = () => {
       </div>
 
       {/* Balance Section */}
-      <div className="px-4 py-6 text-center bg-white">
+      <div className="px-4 py- text-center bg-white">
         {isLoading ? (
           <div className="animate-pulse">
             <div className="h-10 bg-gray-200 rounded w-48 mx-auto mb-3"></div>
@@ -113,10 +113,10 @@ const TrustWalletClone = () => {
           </div>
         ) : (
           <>
-            <div className="text-4xl font-bold text-gray-900 mb-3">
+            <div className="text-4xl font-bold text-gray-900 ">
               $ {formatCurrency(usdBalance)}
             </div>
-            <div className={`flex items-center justify-center text-base mb-6 ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
+            <div className={`flex items-center justify-center text-base mb-4 ${ethChange24h < 0 ? 'text-red-500' : 'text-green-500'}`}>
               <span className="text-sm">{ethChange24h < 0 ? '↓' : '↑'}</span>
               $ {formatCurrency(Math.abs(usdChange))} ({formatPercentage(ethChange24h)}%)
             </div>
@@ -129,17 +129,33 @@ const TrustWalletClone = () => {
       <div className="flex justify-center space-x-6 px-4 mb-6">
         <button className="flex flex-col items-center space-y-2">
           <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
-            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-              <path d="M7 17L17 7M17 7H7M17 7V17" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              className="w-5 h-5 text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+            >
+              <path
+                d="M5 10l7-7 7 7"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M12 3v18"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
+
           </div>
           <span className="text-xs text-gray-600">Enviar</span>
         </button>
 
         <button className="flex flex-col items-center space-y-2">
           <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
-            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-              <path d="M7 16L17 8M17 16L7 8" strokeLinecap="round" strokeLinejoin="round" />
+            <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+              <path d="M16 3l4 4-4 4M20 7H4M8 21l-4-4 4-4M4 17h16" />
             </svg>
           </div>
           <span className="text-xs text-gray-600">Swap</span>
@@ -150,20 +166,48 @@ const TrustWalletClone = () => {
           className="flex flex-col items-center space-y-2"
           disabled={isRefreshing}
         >
-          <div className={`w-12 h-12 bg-blue-700 rounded-2xl flex items-center justify-center hover:bg-blue-600 transition-colors ${isRefreshing ? 'opacity-70' : ''}`}>
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" strokeLinecap="round" strokeLinejoin="round" />
+          <div
+            className={`w-12 h-12 bg-blue-700 rounded-2xl flex items-center justify-center hover:bg-blue-600 transition-colors ${isRefreshing ? 'opacity-70' : ''
+              }`}
+          >
+            <svg
+              className="w-5 h-5"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"
+                fill="white"
+              />
             </svg>
           </div>
           <span className="text-xs text-gray-600">Recarregar</span>
         </button>
 
+
         <button className="flex flex-col items-center space-y-2">
           <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center hover:bg-gray-200 transition-colors">
-            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-              <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" strokeLinecap="round" strokeLinejoin="round" />
+            <svg
+              className="w-5 h-5 text-gray-700"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth={2.5}
+            >
+              {/* base do prédio */}
+              <path d="M3 10h18" strokeLinecap="round" strokeLinejoin="round" />
+              {/* telhado */}
+              <path d="M2 10l10-6 10 6" strokeLinecap="round" strokeLinejoin="round" />
+              {/* colunas */}
+              <path d="M6 10v8" strokeLinecap="round" />
+              <path d="M10 10v8" strokeLinecap="round" />
+              <path d="M14 10v8" strokeLinecap="round" />
+              <path d="M18 10v8" strokeLinecap="round" />
+              {/* base inferior */}
+              <path d="M4 20h16" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
+
           <span className="text-xs text-gray-600">Vender</span>
         </button>
       </div>
